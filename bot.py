@@ -143,4 +143,4 @@ async def ping(ctx):
     await asyncio.sleep(1)
     await t.edit(content=f'```My ping is : {ctx.bot.latency * 1000:.0f} MS !```')
 
-client.run(os.getenv('NDgzOTMyNjQ1MzY2MDM4NTI5.DoAfSg.NAgAC9lAgyvAyc5jRwzYp9_xqJc'))
+client.run(os.getenv('TOKEN'))
