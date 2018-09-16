@@ -84,6 +84,7 @@ async def help(ctx):
     embed.add_field(name="r!info", value="Gives you some info about this bot", inline=False)
     embed.add_field(name="r!help", value="Gives this message", inline=False)
     embed.add_field(name="r!userinfo", value="Gives the profile information about you, or other users", inline=False)
+    embed.add_field(name="r!serverroles", value="Shows the roles that exist on the server.", inline=False)
     await ctx.send(embed=embed)
 
 @bot.command()
