@@ -140,7 +140,7 @@ async def info(ctx):
 @bot.command()
 async def ping(ctx):
     t = await ctx.send('Pong!, Calculating...')
-    await asyncio.sleep(1)
+    await asyncio.sleep(2)
     await t.edit(content=f'```My ping is : {ctx.bot.latency * 1000:.0f} MS !```')
 
-bot.run(os.getenv('TOKEN'))'NDgzOTMyNjQ1MzY2MDM4NTI5.DmbXng.qKog4-LnF3cAMjvFV
+bot.run(os.getenv('TOKEN'))
