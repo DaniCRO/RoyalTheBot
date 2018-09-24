@@ -198,4 +198,5 @@ async def presence():
 
 
 
-bot.run('<NDgzOTMyNjQ1MzY2MDM4NTI5.DopGJA.pbvWvwTiF8nKp724rMHXpnq-oMM>')
+bot.loop.create_task(presence())
+bot.run(os.getenv("TOKEN"))
