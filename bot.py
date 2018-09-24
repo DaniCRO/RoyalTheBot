@@ -1,104 +1,202 @@
+#!/usr/bin/env python3.6
+# -*- coding: utf-8 -*-
 import discord
 import random
-import datetime
-import traceback
-import aiohttp
-import asyncio
-import json
-import async_timeout
-from random import randint
 from discord.ext import commands
 import logging
+import traceback
+import asyncio
+import os
+from discord import opus
+from asyncio import sleep
+import contextlib
+import io
+import time
+import datetime
+import math
+import inspect
+import textwrap
+from discomaton.factories import bookbinding
+import async_timeout
+
 
 
 logging.basicConfig(level='INFO')
-bot = commands.Bot(case_insensitive=True, command_prefix='r!')
+bot = commands.Bot(case_insensitive=True, command_prefix='a?')
+bot.load_extension("cogs.admin")
 bot.remove_command('help')
+bot.load_extension("cogs.fun")
+bot.load_extension("cogs.more")
+bot.load_extension("cogs.utility")
+bot.load_extension("cogs.mod")
+bot.load_extension("cogs.api")
+bot.load_extension("cogs.meta")
 
-@bot.event
-async def on_ready():
-    print('Logging in as', bot.user.name)
 
-@bot.listen()
-async def on_message(message):
-    if message.content.lower() == '<@483932645366038529>' and message.author != bot.user:
-        await message.channel.send('**My prefix is `r!` | Use `r!help` for show commands.**')
-    else:
-        await bot.process_command(message)
 
-@bot.command(aliases= ["sinfo"])
-async def serverinfo(ctx):
-	"""Get the server info"""
-	em = discord.Embed(color=discord.Colour.blue())
-	em.add_field(name=':paintbrush: Name', value=f'{ctx.author.guild.name}', inline=False)
-	em.add_field(name=':crown: Owner', value=f'{ctx.author.guild.owner.mention} [{ctx.author.guild.owner.id}]', inline=False)
-	em.add_field(name=':mountain_snow: Icon', value='Do r!servericon', inline=False)
-	em.add_field(name=':family_mwgb: Roles', value='Do r!serverroles', inline=False)
-	em.add_field(name=':bust_in_silhouette: Members', value=f'{ctx.guild.member_count}', inline=False)
-	em.add_field(name=':clock1: Created at', value=ctx.guild.created_at, inline=False)
-	em.set_thumbnail(url=ctx.guild.icon_url)
-	await ctx.send(embed=em)
+colors = [discord.Colour.purple(), discord.Colour.blue(), discord.Colour.red(), discord.Colour.green(), discord.Colour.orange()]
+owner = [404708655578218511]
+OPUS_LIBS = ['libopus-0.x86.dll', 'libopus-0.x64.dll', 'libopus-0.dll', 'libopus.so.0', 'libopus.0.dylib']
+"""
+def load_opus_lib(opus_libs=OPUS_LIBS):
+    if opus.is_loaded():
+        return True
+    for opus_lib in opus_libs:
+        try:
+            opus.load_opus(opus_lib)
+            return
+        except OSError:
+            pass
+    raise RuntimeError('Could not load an opus lib. Tried %s' % (', '.join(opus_libs)))
+load_opus_lib()
+"""
 
-@bot.event
-async def on_command_error(ctx, error):
-    if ctx.author.bot is True:
-        return
-    if isinstance(error, commands.CommandNotFound):
-        return await ctx.send('The command was not found')
-    print(f'{ctx.author} used the command {ctx.command} and got the error  {error}')
-    await ctx.send(f'Error | {error}')
 
-@bot.command(aliases= ["whois"])
-async def userinfo(ctx, member: discord.Member=None):
-    if member is None:
-        member = (ctx.author)
-    embed = discord.Embed(title=f"{member}'s info", color=discord.Colour.blue())
-    embed.set_author(name="Who is?")
-    embed.add_field(name=":bust_in_silhouette: | Name", value=member.name)
-    embed.add_field(name=":id: | ID", value=member.id)
-    embed.add_field(name=":robot: | Bot?", value=member.bot)
-    embed.add_field(name=":atm: | Tag", value=member.discriminator)
-    embed.add_field(name=":eject: | Highest role that he owns", value=member.top_role)
-    embed.add_field(name=":pencil2: | Nickname", value=member.nick)
-    embed.add_field(name=":inbox_tray: | Joined", value=member.joined_at)
-    embed.add_field(name=":clock1: | Created at", value=member.created_at)
-    embed.set_thumbnail(url=member.avatar_url)
-    embed.timestamp = datetime.datetime.utcnow()
-    
-    await ctx.send(embed=embed)
 
+
+
+
+
+
+"""
 @bot.command()
 async def help(ctx):
-    embed = discord.Embed(title="Help", description="An amazing bot, these are the commands:", color=0xeee657)
+    em = discord.Embed(color=random.choice(colors))
+    em.add_field(name='★Fun★', value='`8ball, lenny, respect, ping, poll, choose, calculate`', inline=True)
+    em.add_field(name='★More★', value='`bug, feedback, dbl`', inline=True)
+    em.add_field(name='★Moderation★', value='`kick, ban, purge`', inline=True)
+    em.add_field(name='★Utility★', value='`servericon, serverroles, serverinfo, playerinfo, avatar, s, about`', inline=True)
+    em.set_footer(text="Use 'a?' before each command", icon_url=ctx.me.avatar_url)
+    em.set_thumbnail(url=ctx.me.avatar_url)
+    await ctx.send(embed=em)
+"""
 
-    embed.add_field(name="r!add X Y", value="Adds the number**X** with the number **Y**", inline=False)
-    embed.add_field(name="r!multiply X Y", value="Multiplies the numbers**X** and **Y**", inline=False)
-    embed.add_field(name="r!cat", value="Gives you a gif/photo with a cat to make you happy :)", inline=False)
-    embed.add_field(name="r!info", value="Gives you some info about this bot", inline=False)
-    embed.add_field(name="r!help", value="Gives this message", inline=False)
-    embed.add_field(name="r!userinfo", value="Gives the profile information about you, or other users", inline=False)
-    embed.add_field(name="r!serverroles", value="Shows the roles that exist on the server.", inline=False)
-    await ctx.send(embed=embed)
+
+@bot.check
+async def botcheck(ctx):
+    return not ctx.message.author.bot
+
+
+"""
+@bot.command(aliases= ["kitten", "kitty"])
+async def cat(ctx):
+    fp = "cat/{}".format(random.choice(os.listdir("cat")))
+    await ctx.send(file=discord.File(fp))
+"""
+
+@bot.listen()
+async def on_ready():
+          print('Logging in as', bot.user.name)
+
+
+
+
+
 
 @bot.command()
 async def invite(ctx):
-    embed = discord.Embed(title="Do you want me to invite me into your server?", description="Ok", color=0xeee657)
+    'Returns the bot invite link'
+    em = discord.Embed(color=discord.Colour.orange())
+    em.add_field(name='Invite Royal', value='[Here]( https://discordapp.com/oauth2/authorize?client_id=483932645366038529&permissions=104082502&scope=bot )')
+    await ctx.send(embed=em)
 
-       # give users a link to invite this bot to their server
-    embed.add_field(name="Invite me into your server!", value="[Invite link](<https://discordapp.com/oauth2/authorize?&client_id=483932645366038529&scope=bot&permissions=0>)")
 
-    await ctx.send(embed=embed)
 
+
+
+
+
+
+
+
+
+@bot.listen()
+async def on_command_error(ctx, error):
+    print(f'\'{ctx.author}\' used command \'{ctx.command}\' and got this error: \n-{error}')
+    if isinstance(error, commands.CommandOnCooldown):
+        return await ctx.send(f'Hey, You are being ratelimited! Try again in** {int(error.retry_after)} **seconds!', delete_after=5)
+    if isinstance(error, commands.NotOwner):
+        return await ctx.send('You do not own this bot!')
+    if isinstance(error, commands.BadArgument):
+        return await ctx.send(f'{error}')
+    if isinstance(error, commands.MissingPermissions):
+        return await ctx.send('You are missing permission to execute this command')
+    if isinstance(error, commands.BotMissingPermissions):
+        return await ctx.send('I am missing permission to perform this command!')
+
+
+"""
+@commands.cooldown(1, 5, commands.BucketType.user)
 @bot.command()
-async def info(ctx):
-    embed = discord.Embed(title="Info", description="The best bot ever. :)", color=0xeee657)
-    
-    # give info about you here
-    embed.add_field(name="Creator", value="<@160068544409763840>")
-    
-    # Shows the number of servers the bot is member of.
-    embed.add_field(name="Number of servers that this bot is in", value=f"{len(bot.guilds)}")
+async def search(ctx, *, query):
+    search = query
+    URL = 'https://www.google.com/search?q='
+    words = search.split(" ")
+    num = 0
+    for w in words:
+        if num is 0:
+            URL = URL + w
+            num = 1
+        else:
+            URL = URL + "+"+ w
+    await ctx.send(URL)
+    """
 
-    await ctx.send(embed=embed)
 
-bot.run(os.getenv('TOKEN'))
+
+
+
+
+
+
+
+
+
+
+
+def cleanup_code(content):
+    'Automatically removes code blocks from the code.'
+    if content.startswith('```') and content.endswith('```'):
+        return '\n'.join(content.split('\n')[1:(-1)])
+    return content
+
+
+
+
+async def presence():
+    await bot.wait_until_ready()
+    while not bot.is_closed():
+        a = 0
+        for i in bot.guilds:
+            for u in i.members:
+                if u.bot == False:
+                    a = a + 1
+
+        await bot.change_presence(activity=discord.Game(name="with my friends | r!help"))
+        await sleep(30)
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="to some music | r!help"))
+        await sleep(30) 
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{len(bot.users)} users | r!help"))
+        await sleep(30)
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | r!help"))
+        await sleep(30)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bot.loop.create_task(presence())
+bot.run(os.getenv("TOKEN"))
