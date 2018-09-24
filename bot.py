@@ -39,13 +39,6 @@ async def serverinfo(ctx):
 	em.set_thumbnail(url=ctx.guild.icon_url)
 	await ctx.send(embed=em)
 
-@bot.command(aliases=['sroles'])
-async def serverroles(ctx):
-	"""Get the server roles"""
-	em = discord.Embed(color=discord.Colour.blue())
-	em.add_field(name=f'Server Roles [{len(ctx.guild.roles)}]', value=', '.join(g.name for g in ctx.guild.roles))
-	await ctx.send(embed=em)
-
 @bot.event
 async def on_command_error(ctx, error):
     if ctx.author.bot is True:
@@ -97,35 +90,6 @@ async def invite(ctx):
     await ctx.send(embed=embed)
 
 @bot.command()
-async def cat(ctx):
-    """Generates a random image of a kitty"""
-    async with aiohttp.ClientSession() as cs:
-        async with cs.get('http://aws.random.cat/meow') as r:
-            res = await r.json()
-        embed = discord.Embed(color=0x000000)
-        embed.title = "What a cute :cat:"
-        embed.set_image(url=res['file'])
-        embed.set_footer(text=f"Kitty")
-        embed.timestamp = datetime.datetime.utcnow()
-        await ctx.send(embed=embed)
-        
-@bot.command()
-async def say(ctx, *, message):
-    await ctx.send(message)
-
-@bot.command()
-async def sal(ctx):
-    await ctx.send('cf')
-
-@bot.command()
-async def add(ctx, a: int, b: int):
-    await ctx.send(a+b)
-
-@bot.command()
-async def multiply(ctx, a: int, b: int):
-    await ctx.send(a*b)
-
-@bot.command()
 async def info(ctx):
     embed = discord.Embed(title="Info", description="The best bot ever. :)", color=0xeee657)
     
@@ -136,11 +100,5 @@ async def info(ctx):
     embed.add_field(name="Number of servers that this bot is in", value=f"{len(bot.guilds)}")
 
     await ctx.send(embed=embed)
-
-@bot.command()
-async def ping(ctx):
-    t = await ctx.send('Pong!, Calculating...')
-    await asyncio.sleep(2)
-    await t.edit(content=f'```My ping is : {ctx.bot.latency * 1000:.0f} MS !```')
 
 bot.run(os.getenv('TOKEN'))
