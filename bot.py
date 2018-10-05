@@ -22,7 +22,7 @@ import async_timeout
 
 
 logging.basicConfig(level='INFO')
-bot = commands.Bot(case_insensitive=True, command_prefix='a?')
+bot = commands.Bot(case_insensitive=True, command_prefix='r!')
 bot.load_extension("cogs.admin")
 bot.remove_command('help')
 bot.load_extension("cogs.fun")
