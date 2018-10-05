@@ -49,7 +49,6 @@ class CannotPaginate(Exception):
             ('\N{INPUT SYMBOL FOR NUMBERS}', self.numbered_page ),
             ('\N{BLACK SQUARE FOR STOP}', self.stop_pages),
             ('\N{INFORMATION SOURCE}', self.show_help),
-        ]
          if ctx.guild is not None:
             self.permissions = self.channel.permissions_for(ctx.guild.me)
         else:
