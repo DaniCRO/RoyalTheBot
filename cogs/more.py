@@ -28,7 +28,7 @@ class More():
 		'''Send your feedback to the bot creators
 		-------------------
 		Ex:
-		a?feedback [feedback]'''
+		r!feedback [feedback]'''
 		if feedback is None:
 			await ctx.send('Hey, please do `r!feedback <feedback>`')
 		if feedback is not None:
@@ -50,9 +50,9 @@ class More():
 		'''Report a bug
 		-------------------
 		Ex:
-		a?bug [bug]'''
+		r!bug [bug]'''
 		if bug is None:
-			await ctx.send('Hey, please do `a?bug <bug>`')
+			await ctx.send('Hey, please do `r!bug <bug>`')
 		if bug is not None:
 			await self.bot.get_guild(453974498421506062).get_channel(478504558163787776).send(f'{ctx.author} ({ctx.author.id}) reported: {bug}')
 			await ctx.message.channel.send('Your problem was reported to the team')
