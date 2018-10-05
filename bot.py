@@ -200,3 +200,4 @@ async def presence():
 
 bot.loop.create_task(presence())
 bot.run(os.getenv("TOKEN"))
+
