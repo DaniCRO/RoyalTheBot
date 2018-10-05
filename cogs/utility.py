@@ -1,4 +1,3 @@
-nes (106 sloc)  4.85 KB
 import discord
 import random
 from discord.ext import commands
