@@ -21,27 +21,17 @@ class Meta:
     async def __error(self, ctx, error):
         if isinstance(error, commands.BadArgument):
             await ctx.send(error)
-
-   @commands.command(name='help')
-   @commands.cooldown(1, 5, commands.BucketType.user)
-   async def _help(self, ctx, *, command: str = None):
-       """Shows help about a command or the bot"""
-         try:
-            if command is None:
-                p = await HelpPaginator.from_bot(ctx)
-            else:
-                entity = self.bot.get_cog(command) or self.bot.get_command(command)
-                 if entity is None:
-                    clean = command.replace('@', '@\u200b')
-                    return await ctx.send(f'Command or category "{clean}" not found.')
-                elif isinstance(entity, commands.Command):
-                    p = await HelpPaginator.from_command(ctx, entity)
-                else:
-                    p = await HelpPaginator.from_cog(ctx, entity)
-             await p.paginate()
-        except Exception as e:
-            await ctx.send(e)
-
+	
+@bot.command()
+async def help(ctx):
+    em = discord.Embed(color=random.choice(colors))
+    em.add_field(name='★Fun★', value='`8ball, lenny, respect, ping, poll, choose, calculate`', inline=True)
+    em.add_field(name='★More★', value='`bug, feedback, dbl`', inline=True)
+    em.add_field(name='★Moderation★', value='`kick, ban, purge`', inline=True)
+    em.add_field(name='★Utility★', value='`servericon, serverroles, serverinfo, playerinfo, avatar, s, about`', inline=True)
+    em.set_footer(text="Use 'a?' before each command", icon_url=ctx.me.avatar_url)
+    em.set_thumbnail(url=ctx.me.avatar_url)
+    await ctx.send(embed=em)
 
 
     @commands.command(aliases=['char'])
