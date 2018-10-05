@@ -124,7 +124,7 @@ class Utility():
 		em.add_field(name='Servers', value=f'{len(self.bot.guilds)}', inline=True)
 		em.add_field(name='Users', value=f'{len(self.bot.users)}', inline=True)
 		em.add_field(name=':cloud: Latency', value=f'{ctx.bot.latency * 1000:.0f} MS')
-		em.add_field(name=':crown: Owner', value=f'<@404708655578218511>')
+		em.add_field(name=':crown: Owner', value=f'<@160068544409763840>')
 		em.add_field(name=':clock1: Created at', value=ctx.me.created_at)
 		em.add_field(name='Library', value='Python (discord.py)')
 		em.set_thumbnail(url=ctx.me.avatar_url)
