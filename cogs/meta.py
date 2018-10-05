@@ -31,7 +31,7 @@ async def help(ctx):
     em.add_field(name='★Owner-Only★',value='`eval, shutdown, reload, load, unload`', inline=True)
     em.set_footer(text="Use 'r!' before each command", icon_url=ctx.me.avatar_url)
     em.set_thumbnail(url=ctx.me.avatar_url)
-    await ctx.send(embed=em)
+    await ctx.send(embed=em)z
 
 
 
