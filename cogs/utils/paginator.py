@@ -424,7 +424,7 @@ class HelpPaginator(Pages):
         self.embed.title = self.title
 
         if hasattr(self, '_is_bot'):
-            value ='For more help, join the official bot Support server: [Here]( https://discord.gg/vqquZAj )'
+            value ='For more help, join the official bot Support server: [Here]( https://discord.gg/pNk7nFj )'
             self.embed.add_field(name='Support', value=value, inline=False)
 
         self.embed.set_footer(text=f'Use "{self.prefix}help command" for more info on a command.')
