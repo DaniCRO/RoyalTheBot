@@ -1,6 +1,7 @@
 from discord.ext import commands
 from .utils import checks, formats
-from .utils.paginator import HelpPaginator, CannotPaginate
+from .utils.paginator 
+import HelpPaginator, CannotPaginate
 import discord
 from collections import OrderedDict, deque, Counter
 import os, datetime
