@@ -23,9 +23,9 @@ class Meta:
             await ctx.send(error)
 
    @commands.command(name='help')
-    @commands.cooldown(1, 5, commands.BucketType.user)
-    async def _help(self, ctx, *, command: str = None):
-        """Shows help about a command or the bot"""
+   @commands.cooldown(1, 5, commands.BucketType.user)
+   async def _help(self, ctx, *, command: str = None):
+       """Shows help about a command or the bot"""
          try:
             if command is None:
                 p = await HelpPaginator.from_bot(ctx)
