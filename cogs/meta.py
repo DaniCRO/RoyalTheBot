@@ -1,7 +1,6 @@
 from discord.ext import commands
 from .utils import checks, formats
-from .utils.paginator 
-import HelpPaginator
+from .utils.paginator import HelpPaginator, CannotPaginate
 import discord
 from collections import OrderedDict, deque, Counter
 import os, datetime
@@ -22,17 +21,30 @@ class Meta:
     async def __error(self, ctx, error):
         if isinstance(error, commands.BadArgument):
             await ctx.send(error)
-	
-@bot.command()
-async def help(ctx):
-    em = discord.Embed(color=random.choice(colors))
-    em.add_field(name='★Fun★', value='`8ball, lenny, respect, ping, poll, choose, calculate`', inline=True)
-    em.add_field(name='★More★', value='`bug, feedback, dbl`', inline=True)
-    em.add_field(name='★Moderation★', value='`kick, ban, purge`', inline=True)
-    em.add_field(name='★Utility★', value='`servericon, serverroles, serverinfo, playerinfo, avatar, s, about`', inline=True)
-    em.set_footer(text="Use 'a?' before each command", icon_url=ctx.me.avatar_url)
-    em.set_thumbnail(url=ctx.me.avatar_url)
-    await ctx.send(embed=em)
+
+    @commands.command(name='help')
+    @commands.cooldown(1, 5, commands.BucketType.user)
+    async def _help(self, ctx, *, command: str = None):
+        """Shows help about a command or the bot"""
+
+        try:
+            if command is None:
+                p = await HelpPaginator.from_bot(ctx)
+            else:
+                entity = self.bot.get_cog(command) or self.bot.get_command(command)
+
+                if entity is None:
+                    clean = command.replace('@', '@\u200b')
+                    return await ctx.send(f'Command or category "{clean}" not found.')
+                elif isinstance(entity, commands.Command):
+                    p = await HelpPaginator.from_command(ctx, entity)
+                else:
+                    p = await HelpPaginator.from_cog(ctx, entity)
+
+            await p.paginate()
+        except Exception as e:
+            await ctx.send(e)
+
 
 
     @commands.command(aliases=['char'])
@@ -41,7 +53,7 @@ async def help(ctx):
         """Shows you information about a number of characters.
         -------------------
 		Ex:
-		r!charinfo :wave:
+		a?charinfo :wave:
         """
 
         def to_string(c):
@@ -50,7 +62,7 @@ async def help(ctx):
             return f'**{c}** | ``\\U{digit:>08}`` | {name}'
         msg = '\n'.join(map(to_string, characters))
         if len(msg) > 750:
-            return await ctx.send('Output too long to display.')
+            return await ctx.send('<:AtomicalForbidden:474576377954172949> | Output too long to display.')
         await ctx.send(msg)
 
 
