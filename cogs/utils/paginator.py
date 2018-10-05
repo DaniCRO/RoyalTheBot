@@ -1,6 +1,6 @@
 import asyncio
 import discord
-class CannotPaginate(Exception):
+ class CannotPaginate(Exception):
  pass
  class Pages:
     """Implements a paginator that queries the user for the
