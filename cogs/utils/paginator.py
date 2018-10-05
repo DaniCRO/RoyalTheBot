@@ -50,6 +50,7 @@ import discord
             ('\N{BLACK SQUARE FOR STOP}', self.stop_pages),
             ('\N{INFORMATION SOURCE}', self.show_help),
          if ctx.guild is not None:
+         
             self.permissions = self.channel.permissions_for(ctx.guild.me)
         else:
             self.permissions = self.channel.permissions_for(ctx.bot.user)
