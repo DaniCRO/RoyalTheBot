@@ -99,17 +99,33 @@ async def invite(ctx):
     em = discord.Embed(color=discord.Colour.orange())
     em.add_field(name='Invite Royal', value='[Here]( https://discordapp.com/oauth2/authorize?client_id=483932645366038529&permissions=104082502&scope=bot )')
     await ctx.send(embed=em)
-
-
-
-
-
-
-
-
-
-
-
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+@bot.command(hidden=True, aliases=['set_playing', 'set playing'])
+async def setplaying(ctx, *, message = None):
+    if message is None:
+        return await ctx.send("**Please put message what's playing bot...**")
+    await bot.change_presence(activity=discord.Game(name=f"{message} || r!help"))
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 @bot.listen()
 async def on_command_error(ctx, error):
     print(f'\'{ctx.author}\' used command \'{ctx.command}\' and got this error: \n-{error}')
