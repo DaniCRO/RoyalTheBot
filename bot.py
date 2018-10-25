@@ -197,23 +197,6 @@ async def presence():
 
 
 
-        await bot.change_presence(activity=discord.Game(name="with my friends | r!help"))
-        await sleep(30)
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name="to some music | r!help"))
-        await sleep(30) 
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{len(bot.users)} users | r!help"))
-        await sleep(30)
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{len(bot.guilds)} servers | r!help"))
-        await sleep(30)
-
-
-
-
-
-
-
-
-
-bot.loop.create_task(presence())
+       
 bot.run(os.getenv("TOKEN"))
 
