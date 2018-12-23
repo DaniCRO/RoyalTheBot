@@ -53,7 +53,19 @@ class API():
 
 
 
-
+	@commands.cooldown(1, 5, commands.BucketType.user)
+	@commands.command()
+	async def meme(self, ctx):
+		'Sends nud..memes'
+		async with aiohttp.ClientSession() as cs:
+			async with cs.get("https://api-to.get-a.life/meme") as r:
+				res = await r.json()
+				embed = discord.Embed(color=discord.Colour.red())
+				embed.title = 'Daily dose of memes (dont overdose pls)'
+				embed.set_image(url=res['url'])
+				embed.set_footer(text=f"{self.bot.user.name}")
+				embed.timestamp = datetime.datetime.utcnow()
+				await ctx.send(embed=embed)
 
 
 
