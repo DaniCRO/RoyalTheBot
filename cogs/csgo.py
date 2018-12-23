@@ -1,3 +1,7 @@
+const Discord = module.require('discord.js');
+var request = require('request');
+var cheerio = require('cheerio');
+
 function getStatData(location, $) {
 
     var selector = $('.stats-stat .value').eq(location).text();
@@ -66,4 +70,8 @@ module.exports.run = async (bot, message, args) => {
         message.channel.send(STAT);
 
     })
+}
+
+module.exports.help = {
+    name: "csgo"
 }
