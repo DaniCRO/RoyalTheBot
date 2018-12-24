@@ -63,6 +63,7 @@ class Admin():
 	async def say(self, ctx, *, message):
 		'Make me say something'
 		await ctx.send(message)
+		await ctx.message.delete()
 		
 	@commands.command(hidden=True)
 	@commands.is_owner()
@@ -140,6 +141,8 @@ class Admin():
 		if nick is not None:
 			await ctx.me.edit(nick=nick)
 			return await ctx.send(f"Bot's nick succefully changed to **{nick}**")
+		await ctx.message.delete()
+	
 
 
 
@@ -152,7 +155,9 @@ class Admin():
 	async def shutdown(self, ctx):
 		'Kills the bot'
 		await ctx.send('Shutting down...')
+		await ctx.message.delete()
 		await ctx.bot.logout()
+		
 
 
 	@commands.command(pass_context=True, aliases = ['exec', 'evaluate', 'execute'], name='eval')
