@@ -71,10 +71,10 @@ class Moderation():
 	@commands.command()
 	@commands.has_permissions(kick_members=True)
 	async def silentkick(self, ctx, member: discord.Member = None, *, reason = None):
-		'''Kick a member in a guild
+		'''Silent kick's a member in a guild
 		-------------------
 		Ex:
-		r!kick @Adytzu Bye'''
+		r!kick @DaniCRO Bye'''
 		if member is None:
 			await ctx.send("Please provide a user to kick")
 		if member == ctx.author:
