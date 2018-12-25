@@ -52,13 +52,13 @@ class Moderation():
 		Ex:
 		r!sban @DaniCRO#3269 Bad'''
 		if member is None:
-			await ctx.send("Please provide a user to ban")
+			await ctx.send("Please provide a user to ban",delete_after=5)
 		if member == ctx.author:
-			return await ctx.send("You can't ban yourself,silly!")
+			return await ctx.send("You can't ban yourself,silly!",delete_after=5)
 		if member == self.bot.user:
-			return await ctx.send("I can't ban myself!")
+			return await ctx.send("I can't ban myself!",delete_after=5)
 		if member == ctx.author.guild.owner:
-			return await ctx.send("I can't ban the owner")
+			return await ctx.send("I can't ban the owner",delete_after=5)
 		if member != ctx.author and member != self.bot.user:
 			await member.ban()
 			await ctx.send(f'**{member}** just got banned.',delete_after=1)
@@ -76,13 +76,13 @@ class Moderation():
 		Ex:
 		r!kick @DaniCRO Bye'''
 		if member is None:
-			await ctx.send("Please provide a user to kick")
+			await ctx.send("Please provide a user to kick"delete_after=5)
 		if member == ctx.author:
-			return await ctx.send("You can't kick yourself,silly!")
+			return await ctx.send("You can't kick yourself,silly!"delete_after=5)
 		if member == self.bot.user:
-			return await ctx.send("I can't kick myself!")
+			return await ctx.send("I can't kick myself!"delete_after=5)
 		if member == ctx.author.guild.owner:
-			return await ctx.send("I can't kick the owner")
+			return await ctx.send("I can't kick the owner"delete_after=5)
 		if member != ctx.author and member != self.bot.user:
 			await member.kick()
 			await ctx.send(f'**{member}** just got kicked.',delete_after=1)
