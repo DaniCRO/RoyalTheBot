@@ -76,13 +76,13 @@ class Moderation():
 		Ex:
 		r!kick @DaniCRO Bye'''
 		if member is None:
-			await ctx.send("Please provide a user to kick"delete_after=5)
+			await ctx.send("Please provide a user to kick",delete_after=5)
 		if member == ctx.author:
-			return await ctx.send("You can't kick yourself,silly!"delete_after=5)
+			return await ctx.send("You can't kick yourself,silly!",delete_after=5)
 		if member == self.bot.user:
-			return await ctx.send("I can't kick myself!"delete_after=5)
+			return await ctx.send("I can't kick myself!",delete_after=5)
 		if member == ctx.author.guild.owner:
-			return await ctx.send("I can't kick the owner"delete_after=5)
+			return await ctx.send("I can't kick the owner",delete_after=5)
 		if member != ctx.author and member != self.bot.user:
 			await member.kick()
 			await ctx.send(f'**{member}** just got kicked.',delete_after=1)
